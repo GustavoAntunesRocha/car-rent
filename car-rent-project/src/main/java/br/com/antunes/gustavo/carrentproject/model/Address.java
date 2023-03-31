@@ -8,19 +8,20 @@ import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Address {
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    
-    private String street;
-    
-    private String zipCode;
-    
-    @ManyToOne
-    private City city;
-    
-    public Address() {}
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
+	private String street;
+
+	private String zipCode;
+
+	@ManyToOne
+	private City city;
+
+	public Address() {
+	}
 
 	public Address(Long id, String street, String zipCode, City city) {
 		super();
@@ -29,8 +30,6 @@ public class Address {
 		this.zipCode = zipCode;
 		this.city = city;
 	}
-
-
 
 	public Long getId() {
 		return id;
@@ -63,5 +62,5 @@ public class Address {
 	public void setCity(City city) {
 		this.city = city;
 	}
-    
+
 }

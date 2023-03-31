@@ -1,5 +1,6 @@
 package br.com.antunes.gustavo.carrentproject.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import jakarta.persistence.Entity;
@@ -7,7 +8,7 @@ import jakarta.persistence.Entity;
 @Entity
 public class Employee extends Person{
 
-	private float salary;
+	private BigDecimal salary;
 	
 	private Date hireDate;
 	
@@ -17,7 +18,7 @@ public class Employee extends Person{
 	
 	public Employee() {}
 
-	public Employee(float salary, Date hireDate, String jobTitle, String department) {
+	public Employee(BigDecimal salary, Date hireDate, String jobTitle, String department) {
 		super();
 		this.salary = salary;
 		this.hireDate = hireDate;
@@ -25,11 +26,11 @@ public class Employee extends Person{
 		this.department = department;
 	}
 
-	public float getSalary() {
+	public BigDecimal getSalary() {
 		return salary;
 	}
 
-	public void setSalary(float salary) {
+	public void setSalary(BigDecimal salary) {
 		this.salary = salary;
 	}
 
