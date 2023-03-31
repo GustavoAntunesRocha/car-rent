@@ -18,16 +18,16 @@ public class Address {
     private String zipCode;
     
     @ManyToOne
-    private Country country;
+    private City city;
     
     public Address() {}
 
-	public Address(Long id, String street, String zipCode, Country country) {
+	public Address(Long id, String street, String zipCode, City city) {
 		super();
 		this.id = id;
 		this.street = street;
 		this.zipCode = zipCode;
-		this.country = country;
+		this.city = city;
 	}
 
 
@@ -56,12 +56,12 @@ public class Address {
 		this.zipCode = zipCode;
 	}
 
-	public Country getCountry() {
-		return country;
+	public City getCity() {
+		return this.city;
 	}
 
-	public void setCountry(Country country) {
-		this.country = country;
+	public void setCity(City city) {
+		this.city = city;
 	}
     
 }
