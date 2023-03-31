@@ -17,7 +17,7 @@ public class Vehicle {
     private Long id;
     private String make;
     private String model;
-    private String year;
+    private String modelYear;
     private String licensePlate;
     
     private BigDecimal dailyRentPrice;
@@ -27,12 +27,12 @@ public class Vehicle {
     
     public Vehicle() {}
 
-	public Vehicle(Long id, String make, String model, String year, String licensePlate, BigDecimal dailyRentPrice, VehicleType type) {
+	public Vehicle(Long id, String make, String model, String modelYear, String licensePlate, BigDecimal dailyRentPrice, VehicleType type) {
 		super();
 		this.id = id;
 		this.make = make;
 		this.model = model;
-		this.year = year;
+		this.modelYear = modelYear;
 		this.licensePlate = licensePlate;
 		this.dailyRentPrice = dailyRentPrice;
 		this.type = type;
@@ -63,11 +63,11 @@ public class Vehicle {
 	}
 
 	public String getYear() {
-		return year;
+		return modelYear;
 	}
 
-	public void setYear(String year) {
-		this.year = year;
+	public void setYear(String modelYear) {
+		this.modelYear = modelYear;
 	}
 
 	public String getLicensePlate() {

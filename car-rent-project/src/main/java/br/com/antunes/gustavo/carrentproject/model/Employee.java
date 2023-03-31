@@ -2,6 +2,9 @@ package br.com.antunes.gustavo.carrentproject.model;
 
 import java.util.Date;
 
+import jakarta.persistence.Entity;
+
+@Entity
 public class Employee extends Person{
 
 	private float salary;
