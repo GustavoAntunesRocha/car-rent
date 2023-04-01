@@ -1,6 +1,7 @@
 package br.com.antunes.gustavo.carrentproject.model.dto;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 import br.com.antunes.gustavo.carrentproject.model.Vehicle;
 import br.com.antunes.gustavo.carrentproject.model.VehicleType;
@@ -85,5 +86,25 @@ public class VehicleDTO {
     public void setType(VehicleType type) {
         this.type = type;
     }
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(dailyRentPrice, id, licensePlate, make, model, modelYear, type);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		VehicleDTO other = (VehicleDTO) obj;
+		return Objects.equals(dailyRentPrice, other.dailyRentPrice) && Objects.equals(id, other.id)
+				&& Objects.equals(licensePlate, other.licensePlate) && Objects.equals(make, other.make)
+				&& Objects.equals(model, other.model) && Objects.equals(modelYear, other.modelYear)
+				&& type == other.type;
+	}
 }
 
