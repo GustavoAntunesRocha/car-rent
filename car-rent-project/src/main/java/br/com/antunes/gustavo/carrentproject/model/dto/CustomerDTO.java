@@ -1,13 +1,10 @@
 package br.com.antunes.gustavo.carrentproject.model.dto;
 
-import java.util.List;
-
 import br.com.antunes.gustavo.carrentproject.model.Customer;
 
 public class CustomerDTO {
 
 	private Long id;
-	private String name;
 	private String email;
 	private String firstName;
 	private String lastName;
@@ -21,7 +18,6 @@ public class CustomerDTO {
 
 	public CustomerDTO(Customer customer) {
 		this.id = customer.getId();
-		this.name = customer.getName();
 		this.email = customer.getEmail();
 		this.firstName = customer.getFirstName();
 		this.lastName = customer.getLastName();
@@ -35,14 +31,6 @@ public class CustomerDTO {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public String getEmail() {

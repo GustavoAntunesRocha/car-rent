@@ -16,8 +16,6 @@ public abstract class Person {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private String name;
-
 	@Column(unique = true)
 	private String email;
 
@@ -34,10 +32,9 @@ public abstract class Person {
 	
 	public Person() {}
 
-	public Person(Long id, String name, String email, String firstName, String lastName, String identificationNumber, Address address) {
+	public Person(Long id, String email, String firstName, String lastName, String identificationNumber, Address address) {
 		super();
 		this.id = id;
-		this.name = name;
 		this.email = email;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -51,14 +48,6 @@ public abstract class Person {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public String getEmail() {

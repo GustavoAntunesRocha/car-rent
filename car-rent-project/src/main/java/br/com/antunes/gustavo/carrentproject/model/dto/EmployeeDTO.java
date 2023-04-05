@@ -7,7 +7,6 @@ import br.com.antunes.gustavo.carrentproject.model.Employee;
 public class EmployeeDTO {
 
     private Long id;
-    private String name;
     private String email;
     private String firstName;
     private String lastName;
@@ -22,7 +21,6 @@ public class EmployeeDTO {
 
     public EmployeeDTO(Employee employee) {
         this.id = employee.getId();
-        this.name = employee.getName();
         this.email = employee.getEmail();
         this.firstName = employee.getFirstName();
         this.lastName = employee.getLastName();
@@ -39,14 +37,6 @@ public class EmployeeDTO {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public String getEmail() {
