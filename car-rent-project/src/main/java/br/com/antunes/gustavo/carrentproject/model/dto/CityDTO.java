@@ -1,5 +1,7 @@
 package br.com.antunes.gustavo.carrentproject.model.dto;
 
+import java.util.Objects;
+
 import br.com.antunes.gustavo.carrentproject.model.City;
 
 public class CityDTO {
@@ -40,6 +42,24 @@ public class CityDTO {
 
 	public void setStateDTO(StateDTO stateDTO) {
 		this.stateDTO = stateDTO;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, name, stateDTO);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CityDTO other = (CityDTO) obj;
+		return Objects.equals(id, other.id) && Objects.equals(name, other.name)
+				&& Objects.equals(stateDTO, other.stateDTO);
 	}
 
 }

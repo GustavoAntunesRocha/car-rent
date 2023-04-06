@@ -54,6 +54,7 @@ public class VehicleService {
     }
 
     public void deleteVehicle(Long id) {
+    	getVehicleById(id);
         vehicleRepository.deleteById(id);
     }
 

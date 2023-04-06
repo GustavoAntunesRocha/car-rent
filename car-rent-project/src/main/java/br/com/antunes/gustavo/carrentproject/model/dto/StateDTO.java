@@ -1,5 +1,7 @@
 package br.com.antunes.gustavo.carrentproject.model.dto;
 
+import java.util.Objects;
+
 import br.com.antunes.gustavo.carrentproject.model.State;
 
 public class StateDTO {
@@ -51,5 +53,23 @@ public class StateDTO {
 
 	public void setCountryDTO(CountryDTO countryDTO) {
 		this.countryDTO = countryDTO;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(abbreviation, countryDTO, id, name);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		StateDTO other = (StateDTO) obj;
+		return Objects.equals(abbreviation, other.abbreviation) && Objects.equals(countryDTO, other.countryDTO)
+				&& Objects.equals(id, other.id) && Objects.equals(name, other.name);
 	}
 }

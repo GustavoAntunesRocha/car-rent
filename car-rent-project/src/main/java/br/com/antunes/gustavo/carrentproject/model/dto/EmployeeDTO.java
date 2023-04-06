@@ -1,6 +1,7 @@
 package br.com.antunes.gustavo.carrentproject.model.dto;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 import br.com.antunes.gustavo.carrentproject.model.Employee;
 
@@ -93,6 +94,27 @@ public class EmployeeDTO {
 
 	public void setSalary(BigDecimal salary) {
 		this.salary = salary;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(address, email, firstName, id, identificationNumber, jobTitle, lastName, salary);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		EmployeeDTO other = (EmployeeDTO) obj;
+		return Objects.equals(address, other.address) && Objects.equals(email, other.email)
+				&& Objects.equals(firstName, other.firstName) && Objects.equals(id, other.id)
+				&& Objects.equals(identificationNumber, other.identificationNumber)
+				&& Objects.equals(jobTitle, other.jobTitle) && Objects.equals(lastName, other.lastName)
+				&& Objects.equals(salary, other.salary);
 	}
 
     

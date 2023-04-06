@@ -1,5 +1,7 @@
 package br.com.antunes.gustavo.carrentproject.model.dto;
 
+import java.util.Objects;
+
 import br.com.antunes.gustavo.carrentproject.model.Address;
 
 public class AddressDTO {
@@ -51,5 +53,23 @@ public class AddressDTO {
 
 	public void setCityDTO(CityDTO cityDTO) {
 		this.cityDTO = cityDTO;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(cityDTO, id, street, zipCode);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AddressDTO other = (AddressDTO) obj;
+		return Objects.equals(cityDTO, other.cityDTO) && Objects.equals(id, other.id)
+				&& Objects.equals(street, other.street) && Objects.equals(zipCode, other.zipCode);
 	}
 }
