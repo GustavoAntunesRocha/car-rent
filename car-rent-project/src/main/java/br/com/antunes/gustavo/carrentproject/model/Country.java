@@ -1,5 +1,7 @@
 package br.com.antunes.gustavo.carrentproject.model;
 
+import java.util.Objects;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -47,6 +49,23 @@ public class Country {
 
 	public void setCode(String code) {
 		this.code = code;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(code, id, name);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Country other = (Country) obj;
+		return Objects.equals(code, other.code) && Objects.equals(id, other.id) && Objects.equals(name, other.name);
 	}
     
 }

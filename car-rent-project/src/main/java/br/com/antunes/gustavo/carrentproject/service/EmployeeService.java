@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.antunes.gustavo.carrentproject.model.Employee;
+import br.com.antunes.gustavo.carrentproject.model.dto.AddressDTO;
 import br.com.antunes.gustavo.carrentproject.model.dto.EmployeeDTO;
 import br.com.antunes.gustavo.carrentproject.model.repository.EmployeeRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -19,9 +20,12 @@ public class EmployeeService {
 	
 	private final ObjectMapper objectMapper;
 	
-	public EmployeeService(EmployeeRepository employeeRepository, ObjectMapper objectMapper) {
+	private final AddressService addressService;
+	
+	public EmployeeService(EmployeeRepository employeeRepository, ObjectMapper objectMapper, AddressService addressService) {
         this.employeeRepository = employeeRepository;
         this.objectMapper = objectMapper;
+        this.addressService = addressService;
     }
 
     public List<EmployeeDTO> getAllEmployees() {
@@ -60,6 +64,7 @@ public class EmployeeService {
 
     public EmployeeDTO convertToDTO(Employee employee) {
         EmployeeDTO employeeDTO = new EmployeeDTO(employee);
+        employeeDTO.setAddress(addressService.convertToDTO(employee.getAddress()));
         return employeeDTO;
     }
 
