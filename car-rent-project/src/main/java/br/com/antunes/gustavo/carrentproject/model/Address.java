@@ -1,5 +1,8 @@
 package br.com.antunes.gustavo.carrentproject.model;
 
+import java.util.Objects;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,7 +20,7 @@ public class Address {
 
 	private String zipCode;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private City city;
 
 	public Address() {
@@ -61,6 +64,24 @@ public class Address {
 
 	public void setCity(City city) {
 		this.city = city;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(city, id, street, zipCode);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Address other = (Address) obj;
+		return Objects.equals(city, other.city) && Objects.equals(id, other.id) && Objects.equals(street, other.street)
+				&& Objects.equals(zipCode, other.zipCode);
 	}
 
 }
