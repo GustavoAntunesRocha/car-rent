@@ -1,6 +1,7 @@
 package br.com.antunes.gustavo.carrentproject.repositories;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.math.BigDecimal;
 
@@ -22,7 +23,7 @@ public class EmployeeRepositoryTest {
 	private EmployeeRepository employeeRepository;
 
 	@Test
-	public void testConvert() {
+	public void testSave() {
 		Employee employee = new Employee();
 		employee.setId(1L);
 		employee.setFirstName("Joao");
@@ -37,5 +38,51 @@ public class EmployeeRepositoryTest {
 		Employee retrievedEmployee = employeeRepository.save(employee);
 
 		assertEquals(employee, retrievedEmployee);
+	}
+
+	@Test
+	public void testUpdate() {
+		Employee employee = new Employee();
+		employee.setId(1L);
+		employee.setFirstName("Joao");
+		employee.setLastName("Silva");
+		employee.setEmail("teste@teste.com");
+		employee.setIdentificationNumber("123");
+		employee.setJobTitle("Sales manager");
+		employee.setSalary(BigDecimal.valueOf(2500));
+		employee.setAddress(new Address(1L, "Rua 5", "740000",
+				new City(1L, "Goiania", new State(1L, "Goias", "GO", new Country(1L, "Brasil", "55")))));
+
+		Employee retrievedEmployee = employeeRepository.save(employee);
+
+		retrievedEmployee.setFirstName("Gustavo");
+		retrievedEmployee.setLastName("Antunes");
+		retrievedEmployee.setEmail("teste2@teste2.com");
+		retrievedEmployee.setIdentificationNumber("128883");
+		retrievedEmployee.setJobTitle("Java Developer");
+		retrievedEmployee.setSalary(BigDecimal.valueOf(4000));
+
+		Employee updatedEmployee = employeeRepository.save(retrievedEmployee);
+
+		assertEquals(retrievedEmployee, updatedEmployee);
+	}
+
+	public void testDelete() {
+		Employee employee = new Employee();
+		employee.setId(1L);
+		employee.setFirstName("Joao");
+		employee.setLastName("Silva");
+		employee.setEmail("teste@teste.com");
+		employee.setIdentificationNumber("123");
+		employee.setJobTitle("Sales manager");
+		employee.setSalary(BigDecimal.valueOf(2500));
+		employee.setAddress(new Address(1L, "Rua 5", "740000",
+				new City(1L, "Goiania", new State(1L, "Goias", "GO", new Country(1L, "Brasil", "55")))));
+
+		Employee retrievedEmployee = employeeRepository.save(employee);
+
+		employeeRepository.delete(retrievedEmployee);
+
+		assertNull(employeeRepository.findById(retrievedEmployee.getId()));
 	}
 }
