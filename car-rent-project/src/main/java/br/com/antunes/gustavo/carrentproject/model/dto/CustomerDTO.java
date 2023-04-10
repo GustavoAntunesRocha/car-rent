@@ -1,6 +1,9 @@
 package br.com.antunes.gustavo.carrentproject.model.dto;
 
+import java.util.List;
+
 import br.com.antunes.gustavo.carrentproject.model.Customer;
+import br.com.antunes.gustavo.carrentproject.model.Rental;
 
 public class CustomerDTO {
 
@@ -12,6 +15,8 @@ public class CustomerDTO {
 	private AddressDTO address;
 
 	private String driverLicenceNumber;
+	
+	private List<RentalDTO> rentals;
 
 	public CustomerDTO() {
 	}
@@ -23,6 +28,9 @@ public class CustomerDTO {
 		this.lastName = customer.getLastName();
 		this.identificationNumber = customer.getIdentificationNumber();
 		this.address = new AddressDTO(customer.getAddress());
+		for (Rental rental : customer.getRentals()) {
+			this.rentals.add(new RentalDTO(rental));
+		}
 	}
 
 	public Long getId() {
@@ -79,6 +87,14 @@ public class CustomerDTO {
 
 	public void setDriverLicenceNumber(String driverLicenceNumber) {
 		this.driverLicenceNumber = driverLicenceNumber;
+	}
+
+	public List<RentalDTO> getRentals() {
+		return rentals;
+	}
+
+	public void setRentals(List<RentalDTO> rentals) {
+		this.rentals = rentals;
 	}
 
 }
