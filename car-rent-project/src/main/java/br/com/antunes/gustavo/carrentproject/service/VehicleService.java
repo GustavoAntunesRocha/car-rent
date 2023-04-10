@@ -63,7 +63,7 @@ public class VehicleService {
         return vehicleDTO;
     }
 
-    private Vehicle convertToEntity(VehicleDTO vehicleDTO) {
+    public Vehicle convertToEntity(VehicleDTO vehicleDTO) {
         Vehicle vehicle = new Vehicle();
         vehicle.setId(vehicleDTO.getId());
         vehicle.setMake(vehicleDTO.getMake());

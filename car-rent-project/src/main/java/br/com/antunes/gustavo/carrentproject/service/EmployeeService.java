@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.antunes.gustavo.carrentproject.model.Employee;
-import br.com.antunes.gustavo.carrentproject.model.dto.AddressDTO;
 import br.com.antunes.gustavo.carrentproject.model.dto.EmployeeDTO;
 import br.com.antunes.gustavo.carrentproject.model.repository.EmployeeRepository;
 import jakarta.persistence.EntityNotFoundException;
