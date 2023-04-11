@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 
 import br.com.antunes.gustavo.carrentproject.model.Customer;
 import br.com.antunes.gustavo.carrentproject.model.Rental;
-import br.com.antunes.gustavo.carrentproject.model.Vehicle;
 import br.com.antunes.gustavo.carrentproject.model.dto.CustomerDTO;
 import br.com.antunes.gustavo.carrentproject.model.dto.RentalDTO;
 import br.com.antunes.gustavo.carrentproject.model.repository.CustomerRepository;
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class CustomerService {
@@ -26,12 +26,33 @@ public class CustomerService {
 		this.vehicleService = vehicleService;
 		this.addressService = addressService;
 	}
+	
+	public CustomerDTO create(CustomerDTO customerDTO) {
+		return convertToDTO(customerRepository.save(convertToEntity(customerDTO)));
+	}
+	
+	public CustomerDTO update(CustomerDTO customerDTO) {
+		Customer customer = customerRepository.findById(customerDTO.getId()).orElseThrow(() -> new EntityNotFoundException("Customer not found with id: " + customerDTO.getId()));
+		customer = convertToEntity(customerDTO);
+		customerRepository.save(customer);
+		return convertToDTO(customer);
+	}
+	
+	public void delete(long id) {
+		findById(id);
+		customerRepository.deleteById(id);
+	}
+	
+	public CustomerDTO findById(long id) throws EntityNotFoundException{
+		Customer customer = customerRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Customer not found with id: " + id));
+		return convertToDTO(customer);
+	}
 
 	public CustomerDTO convertToDTO(Customer customer) {
 		return new CustomerDTO(customer);
 	}
 
-	public Customer convertToEntity(CustomerDTO customerDTO) {
+	public Customer convertToEntity(CustomerDTO customerDTO) throws EntityNotFoundException{
 		Customer customer = new Customer();
 		customer.setId(customerDTO.getId());
 		customer.setFirstName(customerDTO.getFirstName());
