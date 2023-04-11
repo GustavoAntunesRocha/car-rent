@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.antunes.gustavo.carrentproject.model.Customer;
 import br.com.antunes.gustavo.carrentproject.model.Rental;
+import br.com.antunes.gustavo.carrentproject.model.RentalStatus;
 import br.com.antunes.gustavo.carrentproject.model.dto.CustomerDTO;
 import br.com.antunes.gustavo.carrentproject.model.dto.RentalDTO;
 import br.com.antunes.gustavo.carrentproject.model.repository.CustomerRepository;
@@ -66,7 +67,7 @@ public class CustomerService {
 			for (RentalDTO rentalDTO : customerDTO.getRentals()) {
 				rentals.add(
 						new Rental(rentalDTO.getId(), customer, vehicleService.convertToEntity(rentalDTO.getVehicle()),
-								rentalDTO.getStartDate(), rentalDTO.getEndDate(), rentalDTO.getTotalPrice()));
+								rentalDTO.getStartDate(), rentalDTO.getEndDate(), rentalDTO.getTotalPrice(), RentalStatus.valueOf(rentalDTO.getRentalStatus())));
 			}
 		}
 		customer.setRentals(rentals);

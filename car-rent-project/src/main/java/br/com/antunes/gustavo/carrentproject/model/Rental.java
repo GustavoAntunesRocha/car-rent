@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -27,8 +29,11 @@ public class Rental {
 	private LocalDate endDate;
 	
 	private BigDecimal totalPrice;
+	
+	@Enumerated(EnumType.STRING)
+	private RentalStatus rentalStatus;
 
-	public Rental(Long id, Customer customer, Vehicle vehicle, LocalDate startDate, LocalDate endDate, BigDecimal totalPrice) {
+	public Rental(Long id, Customer customer, Vehicle vehicle, LocalDate startDate, LocalDate endDate, BigDecimal totalPrice, RentalStatus rentalStatus) {
 		super();
 		this.id = id;
 		this.customer = customer;
@@ -36,6 +41,7 @@ public class Rental {
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.totalPrice = totalPrice;
+		this.rentalStatus = rentalStatus;
 	}
 
 	public Long getId() {
@@ -84,6 +90,14 @@ public class Rental {
 
 	public void setTotalPrice(BigDecimal totalPrice) {
 		this.totalPrice = totalPrice;
+	}
+
+	public RentalStatus getRentalStatus() {
+		return rentalStatus;
+	}
+
+	public void setRentalStatus(RentalStatus rentalStatus) {
+		this.rentalStatus = rentalStatus;
 	}
 	
 }

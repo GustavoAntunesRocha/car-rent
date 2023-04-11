@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import br.com.antunes.gustavo.carrentproject.model.Rental;
+import br.com.antunes.gustavo.carrentproject.model.RentalStatus;
 
 public class RentalDTO {
     
@@ -19,6 +20,8 @@ public class RentalDTO {
     
     private BigDecimal totalPrice;
     
+    private String rentalStatus;
+    
     // Constructors, getters and setters
     
     public RentalDTO() {}
@@ -30,6 +33,7 @@ public class RentalDTO {
         this.startDate = rental.getStartDate();
         this.endDate = rental.getEndDate();
         this.totalPrice = rental.getTotalPrice();
+        this.rentalStatus = rental.getRentalStatus().name();
     }
     
     // Getters and setters
@@ -81,5 +85,13 @@ public class RentalDTO {
     public void setTotalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
     }
+
+	public String getRentalStatus() {
+		return rentalStatus;
+	}
+
+	public void setRentalStatus(RentalStatus rentalStatus) {
+		this.rentalStatus = rentalStatus.name();
+	}
 }
 

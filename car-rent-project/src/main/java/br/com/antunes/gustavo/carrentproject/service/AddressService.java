@@ -1,7 +1,5 @@
 package br.com.antunes.gustavo.carrentproject.service;
 
-import java.util.Optional;
-
 import org.springframework.stereotype.Service;
 
 import br.com.antunes.gustavo.carrentproject.model.Address;
