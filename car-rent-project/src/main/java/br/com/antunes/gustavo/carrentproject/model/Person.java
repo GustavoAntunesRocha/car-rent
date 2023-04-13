@@ -1,6 +1,7 @@
 package br.com.antunes.gustavo.carrentproject.model;
 
 import java.util.Objects;
+import java.util.logging.Logger;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -13,6 +14,8 @@ import jakarta.persistence.OneToOne;
 
 @MappedSuperclass
 public abstract class Person {
+	
+	private static final Logger logger = Logger.getLogger(Person.class.getName());
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -99,12 +102,20 @@ public abstract class Person {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		logger.info("Entering equals method in Person class");
+		if (this == obj) {
+			logger.info("Exiting equals method in Person class with true value");
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
+			logger.info("Exiting equals method in Person class with false value");
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
+			logger.info("Exiting equals method in Person class with false value");
 			return false;
+		}
+		logger.info("Exiting equals method in Person class with true value");
 		Person other = (Person) obj;
 		return Objects.equals(address, other.address) && Objects.equals(email, other.email)
 				&& Objects.equals(firstName, other.firstName) && Objects.equals(id, other.id)

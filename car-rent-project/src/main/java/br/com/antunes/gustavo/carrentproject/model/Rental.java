@@ -2,6 +2,7 @@ package br.com.antunes.gustavo.carrentproject.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Objects;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -32,6 +33,8 @@ public class Rental {
 	
 	@Enumerated(EnumType.STRING)
 	private RentalStatus rentalStatus;
+	
+	public Rental() {}
 
 	public Rental(Long id, Customer customer, Vehicle vehicle, LocalDate startDate, LocalDate endDate, BigDecimal totalPrice, RentalStatus rentalStatus) {
 		super();
@@ -90,6 +93,26 @@ public class Rental {
 
 	public void setTotalPrice(BigDecimal totalPrice) {
 		this.totalPrice = totalPrice;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(customer, endDate, id, rentalStatus, startDate, totalPrice, vehicle);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Rental other = (Rental) obj;
+		return Objects.equals(customer, other.customer) && Objects.equals(endDate, other.endDate)
+				&& Objects.equals(id, other.id) && rentalStatus == other.rentalStatus
+				&& Objects.equals(startDate, other.startDate) && Objects.equals(totalPrice, other.totalPrice)
+				&& Objects.equals(vehicle, other.vehicle);
 	}
 
 	public RentalStatus getRentalStatus() {

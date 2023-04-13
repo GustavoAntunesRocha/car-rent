@@ -1,6 +1,7 @@
 package br.com.antunes.gustavo.carrentproject.model;
 
 import java.util.Objects;
+import java.util.logging.Logger;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -11,6 +12,8 @@ import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Address {
+	
+	private static final Logger logger = Logger.getLogger(Address.class.getName());
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -73,12 +76,20 @@ public class Address {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		logger.info("Entering equals method in Address class");
+		if (this == obj) {
+			logger.info("Exiting equals method in Address class with true value");
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
+			logger.info("Exiting equals method in Address class with false value");
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
+			logger.info("Exiting equals method in Address class with false value");
 			return false;
+		}
+		logger.info("Exiting equals method in Address class with true value");
 		Address other = (Address) obj;
 		return Objects.equals(city, other.city) && Objects.equals(id, other.id) && Objects.equals(street, other.street)
 				&& Objects.equals(zipCode, other.zipCode);
