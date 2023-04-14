@@ -3,6 +3,7 @@ package br.com.antunes.gustavo.carrentproject.model;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -14,6 +15,8 @@ import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Rental {
+	
+	private static final Logger logger = Logger.getLogger(Rental.class.getName());
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -102,12 +105,20 @@ public class Rental {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		logger.info("Entering equals method in Rental class");
+		if (this == obj) {
+			logger.info("Exiting equals method in Rental class with true value");
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
+			logger.info("Exiting equals method in Rental class with false value");
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
+			logger.info("Exiting equals method in Rental class with false value");
 			return false;
+		}
+		logger.info("Exiting equals method in Rental class with true value");
 		Rental other = (Rental) obj;
 		return Objects.equals(customer, other.customer) && Objects.equals(endDate, other.endDate)
 				&& Objects.equals(id, other.id) && rentalStatus == other.rentalStatus

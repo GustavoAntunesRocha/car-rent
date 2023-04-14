@@ -19,6 +19,7 @@ public class RentalService {
 	
 	private final CustomerService customerService;
 	
+	
 	public RentalService(RentalRepository rentalRepository, VehicleService vehicleService, CustomerService customerService) {
 		this.rentalRepository = rentalRepository;
 		this.vehicleService = vehicleService;
@@ -41,6 +42,10 @@ public class RentalService {
 		Rental rental = rentalRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Rental not found with id: " + id));
 		return convertToDTO(rental);
 	}
+
+	public void delete(Long id) {
+		rentalRepository.deleteById(id);
+    }
 	
 	public RentalDTO convertToDTO(Rental rental) {
 		return new RentalDTO(rental);
@@ -51,4 +56,9 @@ public class RentalService {
 		Customer customer = customerService.convertToEntity(rentalDTO.getCustomer());
 		return new Rental(rentalDTO.getId(), customer, vehicle, rentalDTO.getStartDate(), rentalDTO.getEndDate(), rentalDTO.getTotalPrice(), RentalStatus.valueOf(rentalDTO.getRentalStatus()));
 	}
+
+    public Object findAll() {
+        return rentalRepository.findAll();
+    }
+
 }

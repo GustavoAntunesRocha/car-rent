@@ -5,9 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.math.BigDecimal;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 
 import br.com.antunes.gustavo.carrentproject.model.Address;
 import br.com.antunes.gustavo.carrentproject.model.City;
@@ -15,14 +17,22 @@ import br.com.antunes.gustavo.carrentproject.model.Country;
 import br.com.antunes.gustavo.carrentproject.model.Employee;
 import br.com.antunes.gustavo.carrentproject.model.State;
 import br.com.antunes.gustavo.carrentproject.model.repository.EmployeeRepository;
+import jakarta.transaction.Transactional;
 
 @SpringBootTest
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class EmployeeRepositoryTest {
 
 	@Autowired
 	private EmployeeRepository employeeRepository;
 
+	@AfterEach
+	public void cleanUp() {
+		employeeRepository.deleteAll();
+	}
+
 	@Test
+	@Transactional
 	public void testSave() {
 		Employee employee = new Employee();
 		employee.setId(1L);

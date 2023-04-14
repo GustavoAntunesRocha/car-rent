@@ -28,9 +28,7 @@ public class CustomerDTO {
 		this.lastName = customer.getLastName();
 		this.identificationNumber = customer.getIdentificationNumber();
 		this.address = new AddressDTO(customer.getAddress());
-		for (Rental rental : customer.getRentals()) {
-			this.rentals.add(new RentalDTO(rental));
-		}
+		
 	}
 
 	public Long getId() {

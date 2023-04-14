@@ -68,7 +68,7 @@ public class VehicleService {
         vehicle.setId(vehicleDTO.getId());
         vehicle.setMake(vehicleDTO.getMake());
         vehicle.setModel(vehicleDTO.getModel());
-        vehicle.setModel(vehicleDTO.getModelYear());
+        vehicle.setYear(vehicleDTO.getModelYear());
         vehicle.setLicensePlate(vehicleDTO.getLicensePlate());
         vehicle.setDailyRentPrice(vehicleDTO.getDailyRentPrice());
         vehicle.setType(vehicleDTO.getType());

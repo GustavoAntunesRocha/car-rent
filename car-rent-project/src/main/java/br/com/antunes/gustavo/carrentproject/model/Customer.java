@@ -47,7 +47,7 @@ public class Customer extends Person{
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(driverLicenceNumber, rentals);
+		result = prime * result + Objects.hash(driverLicenceNumber);
 		return result;
 	}
 
