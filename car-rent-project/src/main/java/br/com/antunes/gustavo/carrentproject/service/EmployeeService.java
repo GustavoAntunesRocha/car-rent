@@ -70,4 +70,10 @@ public class EmployeeService {
     public Employee convertToEntity(EmployeeDTO employeeDTO) {
     	return objectMapper.convertValue(employeeDTO, Employee.class);
     }
+
+    public EmployeeDTO getEmployeeByName(String name) {
+        Employee employee = employeeRepository.findByFirstName(name)
+                .orElseThrow(() -> new EntityNotFoundException("Employee not found with name " + name));
+        return convertToDTO(employee);
+    }
 }

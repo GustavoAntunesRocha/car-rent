@@ -21,6 +21,7 @@ public class CustomSecurityConfiguration {
 			.formLogin().disable()
 			.securityMatcher("/**")
 			.authorizeHttpRequests(registry -> registry
+					.requestMatchers("/**").permitAll()
 					.requestMatchers("/swagger-ui/**").permitAll()
 					.requestMatchers("/v3/**").permitAll()
 					.requestMatchers("/h2-console/**").permitAll()
