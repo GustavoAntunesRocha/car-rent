@@ -41,6 +41,11 @@ public class EmployeeService {
     }
 
     public EmployeeDTO createEmployee(EmployeeDTO employeeDTO) {
+        if(employeeDTO.getAddress() != null) {
+        	if(employeeDTO.getAddress().getCityDTO() != null){
+                System.out.println("City id: " + employeeDTO.getAddress().getCityDTO().getId());
+            }
+        }
         Employee employee = convertToEntity(employeeDTO);
         Employee savedEmployee = employeeRepository.save(employee);
         return convertToDTO(savedEmployee);
@@ -68,7 +73,9 @@ public class EmployeeService {
     }
 
     public Employee convertToEntity(EmployeeDTO employeeDTO) {
-    	return objectMapper.convertValue(employeeDTO, Employee.class);
+        Employee employee = objectMapper.convertValue(employeeDTO, Employee.class);
+        employee.setAddress(addressService.convertToEntity(employeeDTO.getAddress()));
+        return employee;
     }
 
     public EmployeeDTO getEmployeeByName(String name) {
