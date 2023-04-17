@@ -15,6 +15,8 @@ public class CityService {
     
     private CityRepository cityRepository;
 
+    private StateService stateService;
+
     public CityService(CityRepository cityRepository) {
         this.cityRepository = cityRepository;
     }
@@ -37,7 +39,8 @@ public class CityService {
     }
 
     public CityDTO getCityById(Long id) {
-        return cityRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("City not found with id " + id)).toDTO();
+        City city = cityRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("City not found with id " + id));
+        return new CityDTO(city);
     }
 
     public List<CityDTO> getAllCities() {
@@ -53,7 +56,7 @@ public class CityService {
         City city = new City();
         city.setId(cityDTO.getId());
         city.setName(cityDTO.getName());
-        city.setState(cityDTO.getStateDTO());
+        city.setState(stateService.convertToEntity(cityDTO.getStateDTO()));
         return city;
     }
 }
