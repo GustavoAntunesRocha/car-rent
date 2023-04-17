@@ -60,6 +60,7 @@ public class CountryService {
         Country country = new Country();
         country.setId(countryDTO.getId());
         country.setName(countryDTO.getName());
+        country.setCode(countryDTO.getCode());
         return country;
     }
 }

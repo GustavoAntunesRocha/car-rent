@@ -17,8 +17,9 @@ public class CityService {
 
     private StateService stateService;
 
-    public CityService(CityRepository cityRepository) {
+    public CityService(CityRepository cityRepository, StateService stateService) {
         this.cityRepository = cityRepository;
+        this.stateService = stateService;
     }
 
     public void deleteCity(Long id) {

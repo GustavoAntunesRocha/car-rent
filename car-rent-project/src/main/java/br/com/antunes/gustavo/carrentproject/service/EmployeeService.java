@@ -41,11 +41,6 @@ public class EmployeeService {
     }
 
     public EmployeeDTO createEmployee(EmployeeDTO employeeDTO) {
-        if(employeeDTO.getAddress() != null) {
-        	if(employeeDTO.getAddress().getCityDTO() != null){
-                System.out.println("City id: " + employeeDTO.getAddress().getCityDTO().getId());
-            }
-        }
         Employee employee = convertToEntity(employeeDTO);
         Employee savedEmployee = employeeRepository.save(employee);
         return convertToDTO(savedEmployee);

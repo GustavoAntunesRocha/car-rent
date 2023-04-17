@@ -51,6 +51,7 @@ public class StateService {
         State state = new State();
         state.setId(stateDTO.getId());
         state.setName(stateDTO.getName());
+        state.setAbbreviation(stateDTO.getAbbreviation());
         state.setCountry(countryService.convertToEntity(stateDTO.getCountryDTO()));
         return state;
     }
