@@ -21,6 +21,9 @@ public class AddressService {
 	}
 
 	public AddressDTO convertToDTO(Address address) {
+		if (address == null) {
+			return null;
+		}
 		CountryDTO countryDTO = new CountryDTO(address.getCity().getState().getCountry());
 		StateDTO stateDTO = new StateDTO(address.getCity().getState());
 		stateDTO.setCountryDTO(countryDTO);
@@ -34,10 +37,16 @@ public class AddressService {
 	}
 
 	public Address convertToEntity(AddressDTO addressDTO) throws EntityNotFoundException{
+		if (addressDTO == null) {
+			return null;
+		}
 		Address address = new Address();
 		address.setId(addressDTO.getId());
 		address.setStreet(addressDTO.getStreet());
 		address.setZipCode(addressDTO.getZipCode());
+		if(addressDTO.getCityDTO() == null) {
+			throw new EntityNotFoundException("City not found");
+		}
 		City city = cityRepository.findById(addressDTO.getCityDTO().getId()).orElseThrow(() -> new EntityNotFoundException("City not found"));
 		address.setCity(city);
 		return address;

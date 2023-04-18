@@ -26,8 +26,8 @@ public class EmployeeDTO {
         this.firstName = employee.getFirstName();
         this.lastName = employee.getLastName();
         this.identificationNumber = employee.getIdentificationNumber();
-        this.address = new AddressDTO(employee.getAddress());
-
+		if(employee.getAddress() != null)
+        	this.address = new AddressDTO(employee.getAddress());
         this.jobTitle = employee.getJobTitle();
         this.salary = employee.getSalary();
     }

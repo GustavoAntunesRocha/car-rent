@@ -50,6 +50,10 @@ public class EmployeeService {
         Employee employee = employeeRepository.findById(employeeDTO.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Employee not found with id " + employeeDTO.getId()));
 
+        if(employeeDTO.getAddress() == null){
+        	employeeDTO.setAddress(convertToDTO(employee).getAddress());           
+        }
+        employeeDTO.getAddress().setId(employee.getAddress().getId());
         employee = convertToEntity(employeeDTO);
 
         Employee savedEmployee = employeeRepository.save(employee);
