@@ -75,4 +75,18 @@ public class CustomerService {
 		
 		return customer;
 	}
+
+    public CustomerDTO findByName(String name) {
+		Customer customer = customerRepository.findByFirstName(name).orElseThrow(() -> new EntityNotFoundException("Customer not found with name: " + name));
+        return convertToDTO(customer);
+    }
+
+    public List<CustomerDTO> findAll() {
+        List<Customer> customers = customerRepository.findAll();
+		List<CustomerDTO> customerDTOs = new ArrayList<>();
+		for (Customer customer : customers) {
+			customerDTOs.add(convertToDTO(customer));
+		}
+		return customerDTOs;
+    }
 }
