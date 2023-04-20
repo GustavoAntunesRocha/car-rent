@@ -28,7 +28,7 @@ public class CustomerDTO {
 		this.lastName = customer.getLastName();
 		this.identificationNumber = customer.getIdentificationNumber();
 		this.address = new AddressDTO(customer.getAddress());
-		
+		this.driverLicenceNumber = customer.getDriverLicenceNumber();
 	}
 
 	public Long getId() {

@@ -36,7 +36,7 @@ public class EmployeeController {
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody EmployeeDTO employeeDTO) {
-        return ResponseEntity.ok(employeeService.createEmployee(employeeDTO));
+        return ResponseEntity.created(null).body(employeeService.createEmployee(employeeDTO));
     }
 
     @PutMapping
