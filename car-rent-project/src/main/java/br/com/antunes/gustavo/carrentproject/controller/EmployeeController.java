@@ -14,7 +14,7 @@ import br.com.antunes.gustavo.carrentproject.model.dto.EmployeeDTO;
 import br.com.antunes.gustavo.carrentproject.service.EmployeeService;
 
 @Controller
-@RequestMapping(value = "/employee")
+@RequestMapping(value = "/api/v1/employee")
 public class EmployeeController {
     
     private EmployeeService employeeService;
