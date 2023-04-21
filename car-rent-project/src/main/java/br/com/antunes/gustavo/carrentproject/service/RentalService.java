@@ -1,5 +1,10 @@
 package br.com.antunes.gustavo.carrentproject.service;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import br.com.antunes.gustavo.carrentproject.model.Customer;
@@ -27,6 +32,12 @@ public class RentalService {
 	}
 	
 	public RentalDTO create(RentalDTO rentalDTO) throws EntityNotFoundException{
+		rentalDTO.setRentalStatus(RentalStatus.OPEN);
+		LocalDate startDate = rentalDTO.getStartDate();
+	    LocalDate endDate = rentalDTO.getEndDate();
+	    BigDecimal totalPrice = vehicleService.getVehicleById(rentalDTO.getVehicle().getId())
+			.getDailyRentPrice().multiply(BigDecimal.valueOf(startDate.until(endDate, ChronoUnit.DAYS)));
+		rentalDTO.setTotalPrice(totalPrice);
 		Rental rental = rentalRepository.save(convertToEntity(rentalDTO));
 		return convertToDTO(rental);
 	}
@@ -43,6 +54,11 @@ public class RentalService {
 		return convertToDTO(rental);
 	}
 
+	public RentalDTO findByCustomer(long customerId) {
+		Rental rental = rentalRepository.findByCustomerId(customerId).orElseThrow(() -> new EntityNotFoundException("Rental not found with customer id: " + customerId));
+		return convertToDTO(rental);
+	}
+
 	public void delete(Long id) {
 		rentalRepository.deleteById(id);
     }
@@ -52,13 +68,14 @@ public class RentalService {
 	}
 	
 	public Rental convertToEntity(RentalDTO rentalDTO) throws EntityNotFoundException{
-		Vehicle vehicle = vehicleService.convertToEntity(rentalDTO.getVehicle());
-		Customer customer = customerService.convertToEntity(rentalDTO.getCustomer());
+		Vehicle vehicle = vehicleService.convertToEntity(vehicleService.getVehicleById(rentalDTO.getVehicle().getId()));
+		Customer customer = customerService.convertToEntity(customerService.findById(rentalDTO.getCustomer().getId()));
 		return new Rental(rentalDTO.getId(), customer, vehicle, rentalDTO.getStartDate(), rentalDTO.getEndDate(), rentalDTO.getTotalPrice(), RentalStatus.valueOf(rentalDTO.getRentalStatus()));
 	}
 
-    public Object findAll() {
-        return rentalRepository.findAll();
+    public List<RentalDTO> findAll() {
+		List<Rental> rentals = rentalRepository.findAll();
+		return rentals.stream().map(rental -> convertToDTO(rental)).toList();
     }
 
 }

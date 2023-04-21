@@ -32,6 +32,11 @@ public class VehicleService {
         return convertToDTO(vehicle);
     }
 
+    public VehicleDTO getVehicleByModel(String model) {
+        return new VehicleDTO(vehicleRepository.findByModelContainingIgnoreCase(model)
+        .orElseThrow(() -> new EntityNotFoundException("Vehicle not found with model name" + model)));
+    }
+
     public VehicleDTO createVehicle(VehicleDTO vehicleDTO) {
         Vehicle vehicle = convertToEntity(vehicleDTO);
         Vehicle savedVehicle = vehicleRepository.save(vehicle);
@@ -74,5 +79,6 @@ public class VehicleService {
         vehicle.setType(vehicleDTO.getType());
         return vehicle;
     }
+
 }
 

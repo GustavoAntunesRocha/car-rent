@@ -3,6 +3,8 @@ package br.com.antunes.gustavo.carrentproject.model.dto;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import br.com.antunes.gustavo.carrentproject.model.Rental;
 import br.com.antunes.gustavo.carrentproject.model.RentalStatus;
 
@@ -14,8 +16,10 @@ public class RentalDTO {
     
     private VehicleDTO vehicle;
     
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyy")
     private LocalDate startDate;
     
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyy")
     private LocalDate endDate;
     
     private BigDecimal totalPrice;
