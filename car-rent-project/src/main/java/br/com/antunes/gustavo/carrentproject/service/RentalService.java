@@ -14,6 +14,7 @@ import br.com.antunes.gustavo.carrentproject.model.Vehicle;
 import br.com.antunes.gustavo.carrentproject.model.dto.RentalDTO;
 import br.com.antunes.gustavo.carrentproject.model.repository.RentalRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 
 @Service
 public class RentalService {
@@ -31,7 +32,7 @@ public class RentalService {
 		this.customerService = customerService;
 	}
 	
-	public RentalDTO create(RentalDTO rentalDTO) throws EntityNotFoundException{
+	public RentalDTO create(@Valid RentalDTO rentalDTO) throws EntityNotFoundException{
 		rentalDTO.setRentalStatus(RentalStatus.OPEN);
 		LocalDate startDate = rentalDTO.getStartDate();
 	    LocalDate endDate = rentalDTO.getEndDate();
@@ -42,7 +43,7 @@ public class RentalService {
 		return convertToDTO(rental);
 	}
 	
-	public RentalDTO update(RentalDTO rentalDTO) throws EntityNotFoundException{
+	public RentalDTO update(@Valid RentalDTO rentalDTO) throws EntityNotFoundException{
 		Rental rental = rentalRepository.findById(rentalDTO.getId()).orElseThrow(() -> new EntityNotFoundException("Rental not found with id: " + rentalDTO.getId()));
 		rental = convertToEntity(rentalDTO);
 		rentalRepository.save(rental);
@@ -67,7 +68,7 @@ public class RentalService {
 		return new RentalDTO(rental);
 	}
 	
-	public Rental convertToEntity(RentalDTO rentalDTO) throws EntityNotFoundException{
+	public Rental convertToEntity(@Valid RentalDTO rentalDTO) throws EntityNotFoundException{
 		Vehicle vehicle = vehicleService.convertToEntity(vehicleService.getVehicleById(rentalDTO.getVehicle().getId()));
 		Customer customer = customerService.convertToEntity(customerService.findById(rentalDTO.getCustomer().getId()));
 		return new Rental(rentalDTO.getId(), customer, vehicle, rentalDTO.getStartDate(), rentalDTO.getEndDate(), rentalDTO.getTotalPrice(), RentalStatus.valueOf(rentalDTO.getRentalStatus()));

@@ -34,4 +34,11 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
        return buildResponseEntity(apiError);
    }
 
+   @ExceptionHandler(NullPointerException.class)
+   protected ResponseEntity<Object> handleNullPointerException(
+           NullPointerException ex) {
+       ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST);
+       apiError.setMessage(ex.getMessage());
+       return buildResponseEntity(apiError);
+   }
 }

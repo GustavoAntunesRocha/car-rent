@@ -7,18 +7,27 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import br.com.antunes.gustavo.carrentproject.model.Rental;
 import br.com.antunes.gustavo.carrentproject.model.RentalStatus;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 public class RentalDTO {
     
     private Long id;
     
+    @Valid
+    @NotNull
     private CustomerDTO customer;
     
+    @Valid
+    @NotNull
     private VehicleDTO vehicle;
     
+    @NotNull
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyy")
     private LocalDate startDate;
     
+    @NotNull
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyy")
     private LocalDate endDate;
     

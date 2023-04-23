@@ -1,8 +1,11 @@
 package br.com.antunes.gustavo.carrentproject.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,9 +36,19 @@ public class RentalController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createRental(@RequestBody RentalDTO rentalDTO) {
+    public ResponseEntity<?> createRental(@Validated @RequestBody RentalDTO rentalDTO) {
         return ResponseEntity.created(null).body(rentalService.create(rentalDTO));
     }
     
+    @PutMapping
+    public ResponseEntity<?> updateRental(@Validated @RequestBody RentalDTO rentalDTO) {
+        return ResponseEntity.ok(rentalService.update(rentalDTO));
+    }
+
+    @DeleteMapping
+    public ResponseEntity<?> deleteRental(@RequestParam Long id) {
+        rentalService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
     
 }
