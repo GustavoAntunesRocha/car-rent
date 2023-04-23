@@ -63,7 +63,7 @@ public class EmployeeControllerTest {
     @Test
     public void testCreateEmployee() throws Exception {
         String expectedJson = new ObjectMapper().writeValueAsString(this.employeeDTO);
-        this.mockMvc.perform(post("/employee").content(expectedJson).contentType("application/json"))
+        this.mockMvc.perform(post("/api/v1/employee").content(expectedJson).contentType("application/json"))
                 .andExpect(status().isCreated());
     }
 
