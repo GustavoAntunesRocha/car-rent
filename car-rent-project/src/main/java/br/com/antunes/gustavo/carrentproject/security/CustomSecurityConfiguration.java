@@ -38,8 +38,8 @@ public class CustomSecurityConfiguration {
 			.authorizeHttpRequests(registry -> registry
 					.requestMatchers("/swagger-ui/**").permitAll()
 					.requestMatchers("/v3/**").permitAll()
-					.requestMatchers("/user/create").permitAll()
-					.requestMatchers("/user/login").permitAll()
+					.requestMatchers("/api/v1/user/create").permitAll()
+					.requestMatchers("/api/v1/user/login").permitAll()
 					.anyRequest().authenticated()
 					
 			);

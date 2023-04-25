@@ -48,12 +48,12 @@ public class EmployeeControllerTest {
 
     @BeforeAll
     public void setUp() throws Exception {
-        this.mockMvc.perform(post("/user/create")
+        this.mockMvc.perform(post("/api/v1/user/create")
         .content("{\"email\":\"teste@teste.com\",\"role\":\"ADMIN\"}")
         .param("password", "123")
         .contentType("application/json"))
                 .andExpect(status().isCreated());
-        this.mockMvc.perform(post("/user/login")
+        this.mockMvc.perform(post("/api/v1/user/login")
         .content("{\"email\":\"teste@teste.com\",\"password\":\"123\"}")
         .contentType("application/json"))
                 .andExpect(status().isOk()).andDo(result -> {
