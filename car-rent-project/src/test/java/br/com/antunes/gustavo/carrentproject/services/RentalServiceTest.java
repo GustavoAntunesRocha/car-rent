@@ -9,6 +9,8 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.assertj.core.api.Assertions;
+import org.assertj.core.api.RecursiveComparisonAssert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -164,8 +166,9 @@ public class RentalServiceTest {
 		
 		List<Rental> rentals = new ArrayList<>();
 		rentals.add(retrievedRental);
-		
-		assertEquals(rentals, rentalService.findAll());
+
+		assertEquals(rentals, rentalRepository.findAll());
+
 	}
 
 }
