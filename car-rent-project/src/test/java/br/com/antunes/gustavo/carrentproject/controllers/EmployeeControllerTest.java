@@ -1,11 +1,12 @@
 package br.com.antunes.gustavo.carrentproject.controllers;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.math.BigDecimal;
 
+import org.json.JSONObject;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -43,6 +44,24 @@ public class EmployeeControllerTest {
 
     private EmployeeDTO employeeDTO;
 
+    private String jwt;
+
+    @BeforeAll
+    public void setUp() throws Exception {
+        this.mockMvc.perform(post("/user/create")
+        .content("{\"email\":\"teste@teste.com\",\"role\":\"ADMIN\"}")
+        .param("password", "123")
+        .contentType("application/json"))
+                .andExpect(status().isCreated());
+        this.mockMvc.perform(post("/user/login")
+        .content("{\"email\":\"teste@teste.com\",\"password\":\"123\"}")
+        .contentType("application/json"))
+                .andExpect(status().isOk()).andDo(result -> {
+                    JSONObject responseBody = new JSONObject(result.getResponse().getContentAsString());
+                    this.jwt = responseBody.getString("accesToken");
+                });
+    }
+
     @BeforeEach
     public void setUpValidEmployee() {
         employeeDTO = new EmployeeDTO();
@@ -63,7 +82,10 @@ public class EmployeeControllerTest {
     @Test
     public void testCreateEmployee() throws Exception {
         String expectedJson = new ObjectMapper().writeValueAsString(this.employeeDTO);
-        this.mockMvc.perform(post("/api/v1/employee").content(expectedJson).contentType("application/json"))
+        this.mockMvc.perform(post("/api/v1/employee")
+        .content(expectedJson)
+        .header("Authorization", "Bearer " + this.jwt)
+        .contentType("application/json"))
                 .andExpect(status().isCreated());
     }
 
