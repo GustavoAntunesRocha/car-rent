@@ -59,12 +59,9 @@ public class UserController {
                         @ApiResponse(responseCode = "400", description = "Invalid input"),
                         @ApiResponse(responseCode = "500", description = "Internal server error")
         })
-        public ResponseEntity<?> createUser(@RequestBody @Valid UserDTO userDTO,
-                        @RequestParam @Parameter(description = "User password") String password) {
-                UserEntity user = modelMapper.map(userDTO, UserEntity.class);
-                user.setPassword(password);
-                UserDTO createdUserDTO;
-                createdUserDTO = userService.createUser(user);
+        public ResponseEntity<?> createUser(@RequestBody CreateUserRequest userRequest) {
+                UserDTO user = new UserDTO(0, userRequest.email, null, userRequest.personId);
+                UserDTO createdUserDTO = userService.createUser(user, userRequest.password);
                 return ResponseEntity.status(HttpStatus.CREATED).body(createdUserDTO);
         }
 
@@ -133,5 +130,7 @@ public class UserController {
                 return ResponseEntity.ok().build();
 
         }
+
+        record CreateUserRequest(String email, String password, Long personId) {}
 
 }

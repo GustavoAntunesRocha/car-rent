@@ -38,11 +38,13 @@ public class UserEntity implements UserDetails{
 	private String password;
 	
 	@Enumerated(EnumType.STRING)
-	private Role role;
+	private List<Role> roles;
+
+	private long personId;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return List.of(new SimpleGrantedAuthority(role.name()));
+		return this.roles.stream().map(role -> new SimpleGrantedAuthority(role.name())).toList();
 	}
 
 	@Override
@@ -96,15 +98,24 @@ public class UserEntity implements UserDetails{
 		this.email = email;
 	}
 
-	public Role getRole() {
-		return role;
+	public List<Role> getRoles() {
+		return this.roles;
 	}
 
-	public void setRole(Role role) {
-		this.role = role;
+	public void setRole(List<Role> roles) {
+		this.roles = roles;
 	}
 
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+	public long getPersonId() {
+		return personId;
+	}
+
+	public void setPersonId(long person) {
+		this.personId = person;
+	}
+	
 }

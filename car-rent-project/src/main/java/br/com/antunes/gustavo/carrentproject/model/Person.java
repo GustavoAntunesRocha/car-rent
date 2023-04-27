@@ -3,6 +3,7 @@ package br.com.antunes.gustavo.carrentproject.model;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+import br.com.antunes.gustavo.carrentproject.security.UserEntity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
@@ -34,6 +35,8 @@ public abstract class Person {
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "address_id", referencedColumnName = "id")
 	private Address address;
+	
+	private UserEntity userEntity;
 	
 	public Person() {}
 
@@ -93,6 +96,14 @@ public abstract class Person {
 
 	public void setAddress(Address address) {
 		this.address = address;
+	}
+
+	public UserEntity getUserEntity() {
+		return userEntity;
+	}
+
+	public void setUserEntity(UserEntity userEntity) {
+		this.userEntity = userEntity;
 	}
 
 	@Override

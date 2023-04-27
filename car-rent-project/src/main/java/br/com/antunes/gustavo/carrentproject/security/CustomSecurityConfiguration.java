@@ -40,6 +40,8 @@ public class CustomSecurityConfiguration {
 					.requestMatchers("/v3/**").permitAll()
 					.requestMatchers("/api/v1/user/create").permitAll()
 					.requestMatchers("/api/v1/user/login").permitAll()
+					.requestMatchers("/api/v1/customer").permitAll()
+					.requestMatchers("/api/v1/location/city").permitAll()
 					.anyRequest().authenticated()
 					
 			);
