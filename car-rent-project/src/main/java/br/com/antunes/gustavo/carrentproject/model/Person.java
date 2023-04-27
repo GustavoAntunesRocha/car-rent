@@ -36,6 +36,7 @@ public abstract class Person {
 	@JoinColumn(name = "address_id", referencedColumnName = "id")
 	private Address address;
 	
+	@OneToOne(cascade = CascadeType.ALL)
 	private UserEntity userEntity;
 	
 	public Person() {}

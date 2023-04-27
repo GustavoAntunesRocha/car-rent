@@ -1,8 +1,6 @@
 package br.com.antunes.gustavo.carrentproject.service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -18,14 +16,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import br.com.antunes.gustavo.carrentproject.controller.LoginRequest;
 import br.com.antunes.gustavo.carrentproject.controller.LoginResponse;
 import br.com.antunes.gustavo.carrentproject.exception.CustomException;
-import br.com.antunes.gustavo.carrentproject.model.Customer;
-import br.com.antunes.gustavo.carrentproject.model.Employee;
 import br.com.antunes.gustavo.carrentproject.model.dto.UserDTO;
 import br.com.antunes.gustavo.carrentproject.model.repository.CustomerRepository;
 import br.com.antunes.gustavo.carrentproject.model.repository.EmployeeRepository;
 import br.com.antunes.gustavo.carrentproject.model.repository.UserRepository;
 import br.com.antunes.gustavo.carrentproject.security.JwtService;
-import br.com.antunes.gustavo.carrentproject.security.Role;
 import br.com.antunes.gustavo.carrentproject.security.UserEntity;
 import jakarta.persistence.EntityNotFoundException;
 
@@ -70,28 +65,13 @@ public class UserService {
         }
     }
 
-    public UserDTO createUser(UserDTO userDTO, String password) throws CustomException {
+    public UserEntity createUser(UserDTO userDTO, String password) throws CustomException {
+        if(password == null || password.isEmpty()) {
+            throw new CustomException("Password cannot be null or empty");
+        }
         UserEntity user = modelMapper.map(userDTO, UserEntity.class);
         user.setPassword(passwordEncoder.encode(password));
-        Optional<Customer> customer = customerRepository.findById(user.getPersonId());
-        List<Role> roles = new ArrayList<>();
-        if(customer.isPresent()) {
-            roles.add(Role.CLIENT);
-        	user.setRole(roles);
-        } else {
-        	Optional<Employee> employee = employeeRepository.findById(user.getPersonId());
-        	if(employee.isPresent()) {
-                roles.add(Role.EMPLOYEE);
-        		user.setRole(roles);
-        	} else {
-        		throw new CustomException("Person not found with ID " + user.getPersonId());
-        	}
-        }
-        userRepository.findByEmail(user.getEmail()).ifPresent(u -> {
-            throw new CustomException("User already exists with email " + user.getEmail());
-        });
-        UserEntity savedUser = userRepository.save(user);
-        return modelMapper.map(savedUser, UserDTO.class);
+        return user;
     }
 
     public UserDTO getUserById(int id) throws EntityNotFoundException {

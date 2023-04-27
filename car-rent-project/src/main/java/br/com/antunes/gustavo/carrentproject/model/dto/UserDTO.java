@@ -15,20 +15,17 @@ public class UserDTO {
 
     private List<Role> roles;
 
-	private long personId;
-
     public UserDTO() {
     }
 
-    public UserDTO(int id, String email, List<Role> roles, long personId) {
+    public UserDTO(int id, String email, List<Role> roles) {
         this.id = id;
         this.email = email;
         this.roles = roles;
-		this.personId = personId;
     }
 
     public static UserDTO fromUser(UserEntity user) {
-        return new UserDTO(user.getId(), user.getEmail(), user.getRoles(), user.getPersonId());
+        return new UserDTO(user.getId(), user.getEmail(), user.getRoles());
     }
 
 	public int getId() {
@@ -51,16 +48,8 @@ public class UserDTO {
 		return roles;
 	}
 
-	public void setRole(List<Role> roles) {
+	public void setRoles(List<Role> roles) {
 		this.roles = roles;
-	}
-
-	public long getPersonId() {
-		return personId;
-	}
-
-	public void setPersonId(long person) {
-		this.personId = person;
 	}
 
 }

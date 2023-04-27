@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.logging.Logger;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
@@ -14,6 +15,7 @@ public class Customer extends Person{
 	
 	private static final Logger logger = Logger.getLogger(Customer.class.getName());
 
+	@Column(unique = true)
 	private String driverLicenceNumber;
 	
 	@OneToMany(mappedBy = "customer", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)

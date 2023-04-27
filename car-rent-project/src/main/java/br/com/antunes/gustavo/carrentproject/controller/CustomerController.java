@@ -34,9 +34,10 @@ public class CustomerController {
         }
     }
 
-    @PostMapping
-    public ResponseEntity<?> create(@RequestBody CustomerDTO customerDTO) {
-        return ResponseEntity.ok(customerService.create(customerDTO));
+    @PostMapping("/create")
+    public ResponseEntity<?> create(@RequestBody createCustomerRequest customCustomer) {
+        CustomerDTO customerDTO = customCustomer.customerDTO();
+        return ResponseEntity.ok(customerService.create(customerDTO, customCustomer.password()));
     }
 
     @PutMapping
@@ -49,5 +50,7 @@ public class CustomerController {
         customerService.delete(id);
         return ResponseEntity.ok().build();
     }
+
+    record createCustomerRequest(CustomerDTO customerDTO, String password) {}
     
 }
