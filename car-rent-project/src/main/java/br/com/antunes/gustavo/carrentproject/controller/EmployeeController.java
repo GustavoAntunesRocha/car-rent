@@ -35,8 +35,9 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody EmployeeDTO employeeDTO) {
-        return ResponseEntity.created(null).body(employeeService.createEmployee(employeeDTO));
+    public ResponseEntity<?> create(@RequestBody createEmployeeRequest employeeRequest) {
+        return ResponseEntity.created(null)
+            .body(employeeService.createEmployee(employeeRequest.employeeDTO(), employeeRequest.password()));
     }
 
     @PutMapping
@@ -50,4 +51,5 @@ public class EmployeeController {
         return ResponseEntity.ok().build();
     }
 
+    record createEmployeeRequest(EmployeeDTO employeeDTO, String password) {}
 }
