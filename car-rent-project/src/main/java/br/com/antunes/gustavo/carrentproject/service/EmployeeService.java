@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -38,6 +39,7 @@ public class EmployeeService {
     }
 
     public List<EmployeeDTO> getAllEmployees() {
+        checkAuthorizationEmployee();
         List<Employee> employees = employeeRepository.findAll();
         return employees.stream()
                 .map(this::convertToDTO)
@@ -45,12 +47,14 @@ public class EmployeeService {
     }
 
     public EmployeeDTO getEmployeeById(Long id) {
+        checkAuthorizationEmployee();
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Employee not found with id " + id));
         return convertToDTO(employee);
     }
 
     public EmployeeDTO createEmployee(EmployeeDTO employeeDTO, String password) {
+        checkAuthorizationEmployee();
         try {
 			UserDTO userDTO = new UserDTO();
 			userDTO.setEmail(employeeDTO.getEmail());
@@ -74,6 +78,7 @@ public class EmployeeService {
     }
 
     public EmployeeDTO updateEmployee(EmployeeDTO employeeDTO) {
+        checkAuthorizationEmployee();
         Employee employee = employeeRepository.findById(employeeDTO.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Employee not found with id " + employeeDTO.getId()));
 
@@ -88,6 +93,7 @@ public class EmployeeService {
     }
 
     public void deleteEmployee(Long id) {
+        checkAuthorizationEmployee();
     	getEmployeeById(id);
         employeeRepository.deleteById(id);
     }
@@ -105,8 +111,16 @@ public class EmployeeService {
     }
 
     public EmployeeDTO getEmployeeByName(String name) {
+        checkAuthorizationEmployee();
         Employee employee = employeeRepository.findByFirstName(name)
                 .orElseThrow(() -> new EntityNotFoundException("Employee not found with name " + name));
         return convertToDTO(employee);
+    }
+
+    private void checkAuthorizationEmployee() {
+        UserEntity userEntity = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(userEntity.getRoles().contains(Role.EMPLOYEE)){
+            throw new CustomException("You are not allowed to access this resource.");
+        }
     }
 }
