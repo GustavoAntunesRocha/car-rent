@@ -65,28 +65,19 @@ public class CustomerService {
 	}
 	
 	public CustomerDTO update(CustomerDTO customerDTO) {
-		Customer customer = customerRepository.findById(customerDTO.getId()).orElseThrow(() -> new EntityNotFoundException("Customer not found with id: " + customerDTO.getId()));
-		UserEntity userEntity = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if(userEntity.getId() != customer.getUserEntity().getId()){
-            throw new CustomException("You are not allowed to access this resource.");
-        }
+		Customer customer = checkAuthorizationCustomer(customerDTO.getId());
 		customer = convertToEntity(customerDTO);
 		customerRepository.save(customer);
 		return convertToDTO(customer);
 	}
 	
 	public void delete(long id) {
-		findById(id);
+		checkAuthorizationCustomer(id);
 		customerRepository.deleteById(id);
 	}
 	
 	public CustomerDTO findById(long id) throws EntityNotFoundException{
-		Customer customer = customerRepository.findById(id)
-			.orElseThrow(() -> new EntityNotFoundException("Customer not found with id: " + id));
-		UserEntity userEntity = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if(userEntity.getId() != customer.getUserEntity().getId()){
-            throw new CustomException("You are not allowed to access this resource.");
-        }
+		Customer customer = checkAuthorizationCustomer(id);
 		return convertToDTO(customer);
 	}
 
@@ -119,6 +110,7 @@ public class CustomerService {
 
     public CustomerDTO findByName(String name) {
 		Customer customer = customerRepository.findByFirstName(name).orElseThrow(() -> new EntityNotFoundException("Customer not found with name: " + name));
+		checkAuthorizationCustomer(customer.getId());
         return convertToDTO(customer);
     }
 
@@ -130,4 +122,13 @@ public class CustomerService {
 		}
 		return customerDTOs;
     }
+
+	private Customer checkAuthorizationCustomer(long id) {
+		UserEntity userEntity = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Customer customer = customerRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Customer not found with id: " + id));
+		if(userEntity.getId() != customer.getUserEntity().getId()){
+			throw new CustomException("You are not allowed to access this resource.");
+		}
+		return customer;
+	}
 }
