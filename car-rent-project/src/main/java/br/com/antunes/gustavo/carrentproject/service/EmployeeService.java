@@ -119,7 +119,7 @@ public class EmployeeService {
 
     private void checkAuthorizationEmployee() {
         UserEntity userEntity = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if(userEntity.getRoles().contains(Role.EMPLOYEE)){
+        if(!userEntity.getRoles().contains(Role.EMPLOYEE) && !userEntity.getRoles().contains(Role.ADMIN)){
             throw new CustomException("You are not allowed to access this resource.");
         }
     }

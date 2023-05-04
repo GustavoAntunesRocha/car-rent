@@ -1,5 +1,6 @@
 package br.com.antunes.gustavo.carrentproject.service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,7 +22,9 @@ import br.com.antunes.gustavo.carrentproject.model.repository.CustomerRepository
 import br.com.antunes.gustavo.carrentproject.model.repository.EmployeeRepository;
 import br.com.antunes.gustavo.carrentproject.model.repository.UserRepository;
 import br.com.antunes.gustavo.carrentproject.security.JwtService;
+import br.com.antunes.gustavo.carrentproject.security.Role;
 import br.com.antunes.gustavo.carrentproject.security.UserEntity;
+import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
@@ -120,5 +123,14 @@ public class UserService {
     public String getAllUsersAsJson() throws JsonProcessingException {
         List<UserDTO> userDTOs = getAllUsers();
         return objectMapper.writeValueAsString(userDTOs);
+    }
+    
+    @PostConstruct
+    public void init() {
+        UserEntity user = new UserEntity();
+        user.setEmail("admin@admin.com");
+        user.setPassword(passwordEncoder.encode("admin"));
+        user.setRoles(Arrays.asList(Role.ADMIN));
+        userRepository.save(user);
     }
 }

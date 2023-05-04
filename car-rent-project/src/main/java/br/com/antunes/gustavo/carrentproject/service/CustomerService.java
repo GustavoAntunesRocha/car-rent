@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -108,12 +109,14 @@ public class CustomerService {
 		return customer;
 	}
 
+	@Secured("EMPLOYEE")
     public CustomerDTO findByName(String name) {
 		Customer customer = customerRepository.findByFirstName(name).orElseThrow(() -> new EntityNotFoundException("Customer not found with name: " + name));
 		checkAuthorizationCustomer(customer.getId());
         return convertToDTO(customer);
     }
 
+	@Secured("EMPLOYEE")
     public List<CustomerDTO> findAll() {
         List<Customer> customers = customerRepository.findAll();
 		List<CustomerDTO> customerDTOs = new ArrayList<>();
