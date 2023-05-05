@@ -2,7 +2,6 @@ package br.com.antunes.gustavo.carrentproject.controllers;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 import java.math.BigDecimal;
 import java.util.Map;
@@ -30,7 +29,6 @@ import br.com.antunes.gustavo.carrentproject.model.dto.AddressDTO;
 import br.com.antunes.gustavo.carrentproject.model.dto.EmployeeDTO;
 import br.com.antunes.gustavo.carrentproject.model.repository.CityRepository;
 import br.com.antunes.gustavo.carrentproject.service.EmployeeService;
-import jakarta.annotation.Priority;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -53,18 +51,13 @@ public class EmployeeControllerTest {
     @Order(2)
     @BeforeAll
     public void setUp() throws Exception {
-        String email = "teste@teste.com";
-        String password = "123";
-        long personId = 1L;
-        Map<String, Object> response = Map.of("email", email, "password", password, "personId", personId);
+        String email = "admin@admin.com";
+        String password = "admin";
+        Map<String, Object> response = Map.of("email", email, "password", password);
         ObjectMapper mapper = new ObjectMapper();
-        this.mockMvc.perform(post("/api/v1/user/create")
-        .content(mapper.writeValueAsString(response))
-        .contentType("application/json"))
-                .andDo(print())
-                .andExpect(status().isCreated());
+        
         this.mockMvc.perform(post("/api/v1/user/login")
-        .content("{\"email\":\"teste@teste.com\",\"password\":\"123\"}")
+        .content(mapper.writeValueAsString(response))
         .contentType("application/json"))
                 .andExpect(status().isOk()).andDo(result -> {
                     JSONObject responseBody = new JSONObject(result.getResponse().getContentAsString());
