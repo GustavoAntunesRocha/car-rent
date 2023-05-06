@@ -8,7 +8,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import br.com.antunes.gustavo.carrentproject.model.Rental;
 import br.com.antunes.gustavo.carrentproject.model.RentalStatus;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 public class RentalDTO {

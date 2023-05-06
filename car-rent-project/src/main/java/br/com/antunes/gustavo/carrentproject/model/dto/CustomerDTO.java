@@ -3,7 +3,6 @@ package br.com.antunes.gustavo.carrentproject.model.dto;
 import java.util.List;
 
 import br.com.antunes.gustavo.carrentproject.model.Customer;
-import br.com.antunes.gustavo.carrentproject.model.Rental;
 
 public class CustomerDTO {
 
