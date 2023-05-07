@@ -18,6 +18,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -92,5 +93,34 @@ public class EmployeeControllerTest {
         .contentType("application/json"))
                 .andExpect(status().isCreated());
     }
+
+    @Test
+    public void testCreateEmployeeWithoutAuthorization() throws Exception {
+        String expectedJson = new ObjectMapper().writeValueAsString(this.employeeDTO);
+        this.mockMvc.perform(post("/api/v1/employee")
+        .content(expectedJson)
+        .contentType("application/json"))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    public void testUpdateEmployeeShouldBeTrue() throws Exception{
+        String originalJson = new ObjectMapper().writeValueAsString(this.employeeDTO);
+        this.mockMvc.perform(post("/api/v1/employee")
+        .content(originalJson)
+        .header("Authorization", "Bearer " + this.jwt)
+        .contentType("application/json"))
+                .andExpect(status().isCreated());
+        
+        this.employeeDTO.setFirstName("Jose");
+        String updatedJson = new ObjectMapper().writeValueAsString(this.employeeDTO);
+        this.mockMvc.perform(MockMvcRequestBuilders
+        .put("/api/v1/employee")
+        .content(updatedJson)
+        .header("Authorization", "Bearer " + this.jwt)
+        .contentType("application/json"))
+                .andExpect(status().isOk());
+    }
+
 
 }
