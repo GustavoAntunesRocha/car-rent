@@ -129,7 +129,7 @@ public class CustomerService {
 	private Customer checkAuthorizationCustomer(long id) {
 		UserEntity userEntity = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Customer customer = customerRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Customer not found with id: " + id));
-		if(userEntity.getId() != customer.getUserEntity().getId()){
+		if(userEntity.getId() != customer.getUserEntity().getId() && !userEntity.getRoles().contains(Role.ADMIN)){
 			throw new CustomException("You are not allowed to access this resource.");
 		}
 		return customer;
