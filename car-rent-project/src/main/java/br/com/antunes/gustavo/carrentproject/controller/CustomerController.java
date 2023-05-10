@@ -34,7 +34,7 @@ public class CustomerController {
         }
     }
 
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<?> create(@RequestBody createCustomerRequest customCustomer) {
         CustomerDTO customerDTO = customCustomer.customerDTO();
         return ResponseEntity.ok(customerService.create(customerDTO, customCustomer.password()));
