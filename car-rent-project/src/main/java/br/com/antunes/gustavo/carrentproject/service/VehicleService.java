@@ -3,6 +3,7 @@ package br.com.antunes.gustavo.carrentproject.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 
 import br.com.antunes.gustavo.carrentproject.model.Vehicle;
@@ -37,12 +38,14 @@ public class VehicleService {
         .orElseThrow(() -> new EntityNotFoundException("Vehicle not found with model name" + model)));
     }
 
+    @Secured({"ADMIN", "EMPLOYEE"})
     public VehicleDTO createVehicle(VehicleDTO vehicleDTO) {
         Vehicle vehicle = convertToEntity(vehicleDTO);
         Vehicle savedVehicle = vehicleRepository.save(vehicle);
         return convertToDTO(savedVehicle);
     }
 
+    @Secured({"ADMIN", "EMPLOYEE"})
     public VehicleDTO updateVehicle(VehicleDTO vehicleDTO) {
         Vehicle vehicle = vehicleRepository.findById(vehicleDTO.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Vehicle not found with id " + vehicleDTO.getId()));
@@ -58,6 +61,7 @@ public class VehicleService {
         return convertToDTO(savedVehicle);
     }
 
+    @Secured("ADMIN")
     public void deleteVehicle(Long id) {
     	getVehicleById(id);
         vehicleRepository.deleteById(id);
