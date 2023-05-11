@@ -1,8 +1,10 @@
 package br.com.antunes.gustavo.carrentproject.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,5 +37,16 @@ public class VehicleController {
     @PostMapping
     public ResponseEntity<?> createVehicle(@RequestBody VehicleDTO vehicleDTO) {
         return ResponseEntity.created(null).body(vehicleService.createVehicle(vehicleDTO));
+    }
+
+    @PutMapping
+    public ResponseEntity<?> updateVehicle(@RequestBody VehicleDTO vehicleDTO) {
+        return ResponseEntity.ok(vehicleService.updateVehicle(vehicleDTO));
+    }
+
+    @DeleteMapping
+    public ResponseEntity<?> deleteVehicle(@RequestParam Long id) {
+        vehicleService.deleteVehicle(id);
+        return ResponseEntity.ok().build();
     }
 }
