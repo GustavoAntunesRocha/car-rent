@@ -52,6 +52,8 @@ API request standards:
 |---|---|---|
 | `GET` | id or model | Return information of vehicles|
 | `POST` || Creates a new record. |
+| `PUT` || Updates a record. |
+| `DELETE` | id | Deletes a record passing it's ID as a paramether. |
 
 ### Base URL: /api/v1/user
 
