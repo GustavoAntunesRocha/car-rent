@@ -9,6 +9,10 @@ Api system to manage an vehicle rental busienes
 - JDBC Url: jdbc:h2:mem:car
 
 ## Methods
+
+With the exception of the creation of an Customer and login, all endpoints require authentication.
+For testing I created a standart administrator user with the credentials: admin@admin.com password: admin.
+
 API request standards:
 
 ### Base URL: /api/v1/customer
