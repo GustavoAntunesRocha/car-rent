@@ -55,9 +55,11 @@ public class RentalService {
 		return convertToDTO(rental);
 	}
 
-	public RentalDTO findByCustomer(long customerId) {
-		Rental rental = rentalRepository.findByCustomerId(customerId).orElseThrow(() -> new EntityNotFoundException("Rental not found with customer id: " + customerId));
-		return convertToDTO(rental);
+	public List<RentalDTO> findByCustomer(long customerId) {
+		List<Rental> rentals = rentalRepository.findByCustomerId(customerId);
+		if(rentals.isEmpty()) throw new EntityNotFoundException("Rental not found with customer id: " + customerId);
+		List<RentalDTO> rentalDTOs = rentals.stream().map(rental -> convertToDTO(rental)).toList();
+		return rentalDTOs;
 	}
 
 	public void delete(Long id) {
