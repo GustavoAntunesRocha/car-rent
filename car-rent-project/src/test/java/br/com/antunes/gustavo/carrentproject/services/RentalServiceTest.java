@@ -27,6 +27,7 @@ import br.com.antunes.gustavo.carrentproject.model.RentalStatus;
 import br.com.antunes.gustavo.carrentproject.model.State;
 import br.com.antunes.gustavo.carrentproject.model.Vehicle;
 import br.com.antunes.gustavo.carrentproject.model.VehicleType;
+import br.com.antunes.gustavo.carrentproject.model.dto.RentalDTO;
 import br.com.antunes.gustavo.carrentproject.model.repository.CityRepository;
 import br.com.antunes.gustavo.carrentproject.model.repository.CustomerRepository;
 import br.com.antunes.gustavo.carrentproject.model.repository.RentalRepository;
@@ -62,6 +63,8 @@ public class RentalServiceTest {
 
 
 	private Rental rental;
+
+	private Rental rental2;
 
 	private Customer customer;
 
@@ -99,9 +102,10 @@ public class RentalServiceTest {
 	    BigDecimal totalPrice = vehicle.getDailyRentPrice().multiply(BigDecimal.valueOf(startDate.until(endDate, ChronoUnit.DAYS)));
 	    
 	    rental = new Rental(1L, customer, vehicle, startDate, endDate, totalPrice, RentalStatus.OPEN);
-	    
+	    rental2 = new Rental(2L, customer, vehicle, startDate, endDate, totalPrice, RentalStatus.OPEN);
 	    List<Rental> rentals = new ArrayList<>();
 	    rentals.add(rental);
+		rentals.add(rental2);
 	    customer.setRentals(rentals);
 
 		customerService.create(customerService.convertToDTO(customer), "123");
@@ -183,6 +187,27 @@ public class RentalServiceTest {
 		rentals.add(retrievedRental);
 
 		assertEquals(rentals, rentalRepository.findAll());
+
+	}
+
+	@Test
+	@Transactional
+	public void findByCustomer() {
+
+		rentalService.create(rentalService.convertToDTO(rental));
+		rentalService.create(rentalService.convertToDTO(rental2));
+		
+		List<Long> rentalsIDs = new ArrayList<>();
+		rentalsIDs.add(rental.getId());
+		rentalsIDs.add(rental2.getId());
+		
+		List<RentalDTO> rentals = rentalService.findByCustomer(customer.getId());
+		List<Long> rentalsIDs2 = new ArrayList<>();
+		for (RentalDTO rentalDTO : rentals) {
+			rentalsIDs2.add(rentalDTO.getId());
+		}
+
+		assertEquals(rentalsIDs, rentalsIDs2);
 
 	}
 
