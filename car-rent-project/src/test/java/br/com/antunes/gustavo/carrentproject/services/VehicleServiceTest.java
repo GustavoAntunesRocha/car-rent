@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithUserDetails;
 
 import br.com.antunes.gustavo.carrentproject.model.VehicleType;
 import br.com.antunes.gustavo.carrentproject.model.dto.VehicleDTO;
@@ -16,6 +17,7 @@ import br.com.antunes.gustavo.carrentproject.service.VehicleService;
 import jakarta.persistence.EntityNotFoundException;
 
 @SpringBootTest
+@WithUserDetails("admin@admin.com")
 public class VehicleServiceTest {
 
     @Autowired
